@@ -1,0 +1,41 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.stock-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.stock-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    width: 200px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.price-up {
+    color: #28a745;
+}
+.price-down {
+    color: #dc3545;
+}
+#ticker-input {
+    padding: 8px;
+    margin-right: 10px;
+    width: 120px;
+}
+button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.last-updated {
+    font-size: 0.8em;
+    color: #6c757d;
+}

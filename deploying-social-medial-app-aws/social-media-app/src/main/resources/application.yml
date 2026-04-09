@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: social-media-app
+  datasource:
+    url: ${POSTGRES_DATABASE_URL}
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_DATABASE_USERNAME}
+    password: ${POSTGRES_DATABASE_PASSWORD}
+  data:
+    mongodb:
+#      uri: mongodb://root:password@localhost:27017/social-media-mongo?authSource=admin
+      # Alternatively, define the properties separately:
+       host: localhost
+       port: 27017
+       database: ${MONGO_DATABASE}
+       username: ${MONGO_DATABASE_USERNAME}
+       password: ${MONGO_DATABASE_PASSWORD}
+       authentication-database: admin
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${OAUTH2_GOOGLE_CLIENT_ID}
+            client-secret: ${OAUTH2_GOOGLE_CLIENT_SECRET}
+          github:
+            client-id:  ${OAUTH2_GITHUB_CLIENT_ID}
+            client-secret: ${OAUTH2_GITHUB_CLIENT_SECRET}
+server:
+  port: ${SERVER_PORT}
+
+application:
+  frontend:
+    baseUrl: ${FRONTEND_BASE_URL}
+  jwt:
+    secretKey: ${JWT_SECRET_KEY}

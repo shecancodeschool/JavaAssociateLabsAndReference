@@ -1,0 +1,98 @@
+pipeline {
+    agent any
+
+    environment {
+        // Configure these in Jenkins Credentials or Environment Variables
+        DOCKER_IMAGE = "umaxcode/advance-week-four-lab"
+        WORKING_DIR = "jenkins-docker/Blog-Post-Application"
+    }
+
+    stages {
+
+        //  stage('Clean Workspace') {
+        //     steps {
+        //         cleanWs()  // clean workspace
+        //     }
+        // }
+
+        // 1. Clone the repository
+        stage('Checkout') {
+            // steps {
+            //     bat """
+            // if exist app-source rmdir /s /q app-source
+            // git clone https://github.com/UmaxCode/java-al-upskilling.git --branch week-four-lab app-source
+            // cd app-source
+            // git checkout week-four-lab
+            //     """
+            // Checkout source code from your repository
+                steps {
+                    script {
+                    def gitRepoUrl = "https://github.com/UmaxCode/java-al-upskilling.git"
+                    checkout([$class: 'GitSCM',
+                    branches: [[name: '*/week-four-lab']],
+                    userRemoteConfigs: [[url: gitRepoUrl]]])
+                    extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'CloneOption', noTags: false, shallow:true, depth: 1]]
+                }
+                }
+            }
+
+        // 2. Run tests (Maven/Gradle)
+        stage('Run Tests') {
+            steps {
+                dir("$WORKING_DIR") {
+                    bat "mvn test"  // Maven
+                }
+            }
+        }
+
+        // 3. Build the JAR (skip tests since they already ran)
+        stage('Build JAR') {
+            steps {
+                dir("$WORKING_DIR") {
+                    bat "mvn clean package -DskipTests"  // Maven
+                }
+            }
+        }
+
+        // 4. Build Docker image (using existing Dockerfile in the project)
+        stage('Build Docker Image') {
+            steps {
+                dir("$WORKING_DIR") {
+                    bat "docker build -t %DOCKER_IMAGE%:%BUILD_NUMBER% ."
+                }
+            }
+        }
+
+        // 5. Push to Docker Hub
+        stage('Push to Docker Hub') {
+
+              steps {
+                  // Push the Docker image to Docker Hub
+                withCredentials([usernamePassword(credentialsId: params.DOCKER_HUB_CRED_ID,
+                 usernameVariable: 'DOCKER_USERNAME',
+                 passwordVariable: 'DOCKER_PASSWORD')]) {
+                    bat '''
+                        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                        docker push %DOCKER_IMAGE%:%BUILD_NUMBER%
+                    '''
+                }
+              }
+        }
+
+        stage("Deploy to production environment - Ansible"){
+           steps {
+                echo "Deployed to production environment successfully"
+           }
+        }
+
+    }
+
+    post {
+        success {
+            echo "✅ Success! Image pushed: %DOCKER_HUB_USER%/%APP_NAME%:%BRANCH%"
+        }
+        failure {
+            echo "❌ Pipeline failed! Check logs for errors."
+        }
+    }
+}

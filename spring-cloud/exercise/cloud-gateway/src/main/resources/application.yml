@@ -1,0 +1,68 @@
+spring:
+  application:
+    name: cloud-gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8084/realms/umaxcode
+  cloud:
+    gateway:
+      routes:
+        - id: service-one
+          uri: lb://SERVICE-ONE
+          predicates:
+            - Path=/service-one/**
+            - Header=X-Built-By, Maxwell
+          filters:
+            - PrefixPath=/api/v1
+            - AddRequestHeader=X-Request-Source, gateway
+            - AddResponseHeader=X-Response-Source, gateway
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback
+        - id: service-two
+          uri: lb://SERVICE-TWO
+          predicates:
+            - Path=/service-two/**
+          filters:
+            - PrefixPath=/api/v1
+            - AddRequestHeader=X-Request-Source, gateway
+            - AddResponseHeader=X-Response-Source, gateway
+            - name: CircuitBreaker
+              args:
+                name: myCircuitBreaker
+                fallbackUri: forward:/fallback
+      enabled: true
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+server:
+  port: 8081
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      myCircuitBreaker:
+        register-health-indicator: true
+        sliding-window-size: 10
+        failure-rate-threshold: 50
+        wait-duration-in-open-state:
+          seconds: 10
+        permitted-number-of-calls-in-half-open-state: 3
+        minimum-number-of-calls: 5
+

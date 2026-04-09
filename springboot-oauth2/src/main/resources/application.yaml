@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: springboot-oauth2
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-secret: ${google-client-secret}
+            client-id: ${google-client-id}
+            scope:
+              - profile
+              - email
+              - openid
+      resourceserver:
+        jwt:
+          issuer-uri: https://accounts.google.com

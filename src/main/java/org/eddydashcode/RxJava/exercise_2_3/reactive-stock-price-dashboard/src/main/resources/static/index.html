@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Stock Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+<h1>Real-Time Stock Dashboard</h1>
+
+<div>
+    <select id="ticker-select">
+        <option value="">-- Select a ticker --</option>
+        <option value="AAPL">AAPL</option>
+        <option value="MSFT">MSFT</option>
+        <option value="GOOGL">GOOGL</option>
+        <option value="TSLA">TSLA</option>
+        <option value="AMZN">AMZN</option>
+    </select>
+    <button id="subscribe-btn">Subscribe</button>
+</div>
+
+
+<div class="stock-container" id="stocks-container">
+    <!-- Stock cards will be added here dynamically -->
+</div>
+
+<script src="./js/script.js"></script>
+</body>
+</html>

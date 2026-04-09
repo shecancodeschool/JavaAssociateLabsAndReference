@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: blogPost
+    environment:
+      - POSTGRES_DB=post_db
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_USER=umaxcode
+    ports:
+      - 5455:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: maxwellodoom1729373/blog-post
+    container_name: blog-post-container
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    #    restart: unless-stopped
+
+volumes:
+  postgres_data:
