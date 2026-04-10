@@ -62,7 +62,7 @@ public class BlogPostController {
 
         return ResponseEntity
                 .ok(SuccessResponse.builder()
-                        .message("A blog post retrieved successfully")
+                        .message("A blog post was retrieved successfully")
                         .data(updatedBlogPost)
                         .build());
     }
