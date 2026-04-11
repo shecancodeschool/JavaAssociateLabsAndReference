@@ -12,27 +12,21 @@ import weka.filters.unsupervised.attribute.StringToWordVector;
 
 public class SpamClassifier {
     public static void main(String[] args) throws Exception {
-        // Load original ARFF dataset
+
         DataSource source = new DataSource("data/spam.arff");
         Instances rawData = source.getDataSet();
         rawData.setClassIndex(0); // label is the first column
 
-        // Create and train filter
+
         StringToWordVector filter = new StringToWordVector();
         filter.setInputFormat(rawData);
 
-        // Apply filter to training data
+
         Instances filteredData = Filter.useFilter(rawData, filter);
 
         // Train the classifier
         NaiveBayes model = new NaiveBayes();
         model.buildClassifier(filteredData);
-
-//        RandomForest model = new RandomForest();
-//        model.buildClassifier(filteredData);
-
-//        SMO model = new SMO();
-//        model.buildClassifier(filteredData);
 
         Evaluation eval = new Evaluation(filteredData);
         eval.crossValidateModel(model, filteredData, 10, new Debug.Random(1));
