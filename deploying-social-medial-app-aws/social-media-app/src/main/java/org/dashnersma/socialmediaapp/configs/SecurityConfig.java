@@ -1,4 +1,4 @@
-package org.umaxcodesma.socialmediaapp.configs;
+package org.dashnersma.socialmediaapp.configs;
 
 
 import lombok.RequiredArgsConstructor;

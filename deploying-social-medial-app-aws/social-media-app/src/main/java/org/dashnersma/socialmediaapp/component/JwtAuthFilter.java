@@ -1,4 +1,4 @@
-package org.umaxcodesma.socialmediaapp.component;
+package org.dashnersma.socialmediaapp.component;
 
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Nonnull;
