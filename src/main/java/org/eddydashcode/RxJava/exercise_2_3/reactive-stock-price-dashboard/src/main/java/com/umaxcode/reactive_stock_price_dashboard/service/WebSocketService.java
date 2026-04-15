@@ -1,7 +1,7 @@
-package com.umaxcode.reactive_stock_price_dashboard.service;
+package com.eddydashcodesma.reactive_stock_price_dashboard.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.umaxcode.reactive_stock_price_dashboard.dto.GlobalQuote;
+import com.eddydashcode.reactive_stock_price_dashboard.dto.GlobalQuote;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import lombok.RequiredArgsConstructor;

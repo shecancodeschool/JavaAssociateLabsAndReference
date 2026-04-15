@@ -1,4 +1,4 @@
-package org.umaxcodesma.socialmediaapp.domain.dto.request;
+package org.dashnersma.socialmediaapp.domain.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
