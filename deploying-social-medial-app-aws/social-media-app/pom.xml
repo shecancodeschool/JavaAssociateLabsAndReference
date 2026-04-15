@@ -8,7 +8,7 @@
         <version>3.5.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.umaxcode-sma</groupId>
+    <groupId>org.dashnercode-sma</groupId>
     <artifactId>social-media-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>social-media-app</name>
@@ -79,7 +79,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.26</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

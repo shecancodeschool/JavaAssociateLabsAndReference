@@ -1,4 +1,4 @@
-package org.umaxcodesma.socialmediaapp.controller;
+package org.dashnersma.socialmediaapp.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

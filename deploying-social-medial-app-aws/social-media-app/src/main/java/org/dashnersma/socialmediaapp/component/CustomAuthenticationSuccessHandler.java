@@ -1,4 +1,4 @@
-package org.umaxcodesma.socialmediaapp.component;
+package org.dashnersma.socialmediaapp.component;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
